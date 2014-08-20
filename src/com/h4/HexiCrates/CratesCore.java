@@ -10,9 +10,9 @@ public class CratesCore {
     public CratesCore () {
     }
 
-    public int spawnPack (Player player) {
+    public ReturnCode spawnPack (Player p) {
         ItemStack test = new ItemStack(Material.WOOD_HOE, 1);
-        player.getInventory().addItem(test);
-        return 0;
+        p.getInventory().addItem(test);
+        return ReturnCode.SUCCESS;
     }
 }
