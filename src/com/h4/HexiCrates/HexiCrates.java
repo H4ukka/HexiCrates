@@ -41,20 +41,20 @@ public class HexiCrates extends JavaPlugin implements Listener {
                     case "x":
                         // Placeholder
                     default:
-                        code = ReturnCode.UNKNOW_COMMAND;
+                        code = ReturnCode.UNKNOWN_COMMAND;
                 }
             }
         }else{
-            code = ReturnCode.TOO_MANY_ARGUMENTS;
+            code = ReturnCode.TOO_FEW_ARGUMENTS;
         }
 
         // Check the return code and decide if we need to print out an error message
         switch (code) {
             case UNKNOWN_SOURCE:
 
-            case TOO_MANY_ARGUMENTS:
+            case TOO_FEW_ARGUMENTS:
 
-            case UNKNOW_COMMAND:
+            case UNKNOWN_COMMAND:
         }
 
         if (code == ReturnCode.SUCCESS) {
