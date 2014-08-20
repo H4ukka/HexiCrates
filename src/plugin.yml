@@ -1,5 +1,5 @@
-name: com.h4.HexiCrates.HexiCrates
-main: com.h4.HexiPacks.com.h4.HexiCrates.HexiCrates
+name: HexiCrates
+main: com.h4.HexiCrates.HexiCrates
 version: 0.1r0
 commands:
    roll:
