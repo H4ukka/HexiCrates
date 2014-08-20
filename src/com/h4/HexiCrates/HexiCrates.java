@@ -30,31 +30,34 @@ public class HexiCrates extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
-        int returnCode = 1;
+
+        ReturnCode code = ReturnCode.UNKNOWN_SOURCE;
 
         if (args.length > 0) {
             if (cs instanceof Player) {
                 switch (cmd.getName().toLowerCase()) {
                     case "roll":
-                        returnCode = packCore.spawnPack((Player)cs); break;
+                        code = packCore.spawnPack((Player)cs); break;
                     case "x":
                         // Placeholder
                     default:
-                        // Command doesn't exist
+                        code = ReturnCode.UNKNOW_COMMAND;
                 }
             }
+        }else{
+            code = ReturnCode.TOO_MANY_ARGUMENTS;
         }
 
         // Check the return code and decide if we need to print out an error message
-        switch (returnCode) {
-            case 1:
+        switch (code) {
+            case UNKNOWN_SOURCE:
 
-            case 2:
+            case TOO_MANY_ARGUMENTS:
 
-            case 3:
+            case UNKNOW_COMMAND:
         }
 
-        if (returnCode == 0) {
+        if (code == ReturnCode.SUCCESS) {
             return true;
         }else{
             return false;
