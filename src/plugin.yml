@@ -1,0 +1,8 @@
+name: com.h4.HexiCrates.HexiCrates
+main: com.h4.HexiPacks.com.h4.HexiCrates.HexiCrates
+version: 0.1r0
+commands:
+   roll:
+      description: Rolls a pack.
+      usage: /roll
+      permission-message: You suck :)
