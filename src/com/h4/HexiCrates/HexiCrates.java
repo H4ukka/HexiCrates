@@ -14,8 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class HexiCrates extends JavaPlugin implements Listener {
 
-    private CratesCore packCore = new CratesCore();
     private PluginConfiguration config = new PluginConfiguration(this);
+    private CratesCore packCore = new CratesCore(config, this);
 
     @Override
     public void onEnable() {
