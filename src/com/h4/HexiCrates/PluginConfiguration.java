@@ -27,10 +27,10 @@ public class PluginConfiguration {
 
     public void loadConfiguration () {
         try {
+            plugin.getLogger().info("Loading configuration file...");
             config.load(configFile);
         } catch (InvalidConfigurationException | IOException e1) {
-            plugin.getLogger().warning("Error loading configuration file.");
-            plugin.getLogger().warning(e1.getMessage());
+            plugin.getLogger().warning("Error loading configuration file.\n" + e1.getMessage());
         }
     }
 

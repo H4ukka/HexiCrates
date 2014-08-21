@@ -31,7 +31,7 @@ public class HexiCrates extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
 
-        ReturnCode code = ReturnCode.UNKNOWN_SOURCE;
+        ReturnCode code = ReturnCode.UNSUPPORTED_SOURCE;
 
         if (args.length > 0) {
             if (cs instanceof Player) {
@@ -48,19 +48,36 @@ public class HexiCrates extends JavaPlugin implements Listener {
             code = ReturnCode.TOO_FEW_ARGUMENTS;
         }
 
+        if (returnCodeHasError(code, cs)) {
+            // Errors were encountered and a message was printed; Command failed.
+            return false;
+        }else{
+            // Success!
+            return true;
+        }
+    }
+
+    private boolean returnCodeHasError (ReturnCode code, CommandSender source) {
+
         // Check the return code and decide if we need to print out an error message
         switch (code) {
-            case UNKNOWN_SOURCE:
+            case SUCCESS:
+                return false;
+
+            case UNSUPPORTED_SOURCE:
+                source.sendMessage("§cWho are you?");
+                return true;
 
             case TOO_FEW_ARGUMENTS:
+                source.sendMessage("§cNot enough arguments");
+                return true;
 
             case UNKNOWN_COMMAND:
-        }
+                source.sendMessage("§cUnknown Command");
+                return true;
 
-        if (code == ReturnCode.SUCCESS) {
-            return true;
-        }else{
-            return false;
+            default:
+                return true;
         }
     }
 }

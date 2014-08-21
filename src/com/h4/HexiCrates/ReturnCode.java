@@ -2,18 +2,12 @@ package com.h4.HexiCrates;
 
 public enum ReturnCode {
 
-    SUCCESS (0),
-    UNKNOWN_SOURCE (1),
-    TOO_FEW_ARGUMENTS (2),
-    UNKNOWN_COMMAND (3);
+    SUCCESS,
+    UNSUPPORTED_SOURCE,
+    TOO_FEW_ARGUMENTS,
+    UNKNOWN_COMMAND,
+    PACK_ERROR;
 
-    private int code;
+    private ReturnCode () {}
 
-    private ReturnCode (int code) {
-        this.code = code;
-    }
-
-    public int getCode () {
-        return code;
-    }
 }
