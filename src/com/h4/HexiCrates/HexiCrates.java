@@ -19,13 +19,13 @@ public class HexiCrates extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        getLogger().info("HexiPacks Started.");
         getServer().getPluginManager().registerEvents(this, this);
+        getLogger().info("HexiCrates Started.");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("HexiPacks Closed.");
+        getLogger().info("HexiCrates Closed.");
     }
 
     @Override
@@ -37,44 +37,39 @@ public class HexiCrates extends JavaPlugin implements Listener {
             if (cs instanceof Player) {
                 switch (cmd.getName().toLowerCase()) {
                     case "roll":
-                        code = packCore.spawnPack((Player)cs); break;
+                        code = packCore.spawnCrate((Player) cs, args[0]);
+                        break;
                     case "x":
                         // Placeholder
                     default:
                         code = ReturnCode.UNKNOWN_COMMAND;
                 }
             }
-        }else{
+        } else {
             code = ReturnCode.TOO_FEW_ARGUMENTS;
         }
 
         if (returnCodeHasError(code, cs)) {
             // Errors were encountered and a message was printed; Command failed.
             return false;
-        }else{
+        } else {
             // Success!
             return true;
         }
     }
 
-    private boolean returnCodeHasError (ReturnCode code, CommandSender source) {
+    private boolean returnCodeHasError(ReturnCode code, CommandSender source) {
 
         // Check the return code and decide if we need to print out an error message
         switch (code) {
+            case UNSUPPORTED_SOURCE:
+            case TOO_FEW_ARGUMENTS:
+            case UNKNOWN_COMMAND:
+                source.sendMessage("§c" + code.errorDescription);
+                return true;
+
             case SUCCESS:
                 return false;
-
-            case UNSUPPORTED_SOURCE:
-                source.sendMessage("§cWho are you?");
-                return true;
-
-            case TOO_FEW_ARGUMENTS:
-                source.sendMessage("§cNot enough arguments");
-                return true;
-
-            case UNKNOWN_COMMAND:
-                source.sendMessage("§cUnknown Command");
-                return true;
 
             default:
                 return true;

@@ -2,12 +2,13 @@ package com.h4.HexiCrates;
 
 public enum ReturnCode {
 
-    SUCCESS,
-    UNSUPPORTED_SOURCE,
-    TOO_FEW_ARGUMENTS,
-    UNKNOWN_COMMAND,
-    PACK_ERROR;
+    SUCCESS (""),
+    UNSUPPORTED_SOURCE ("Who are you?"),
+    TOO_FEW_ARGUMENTS ("Not enough arguments."),
+    UNKNOWN_COMMAND ("What command is this?"),
+    PACK_ERROR ("Unknown crate type");
 
-    private ReturnCode () {}
+    String errorDescription;
 
+    private ReturnCode (String errorDescription) { this.errorDescription = errorDescription; }
 }

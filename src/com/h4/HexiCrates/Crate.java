@@ -2,46 +2,75 @@ package com.h4.HexiCrates;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Crate {
 
-    private String crateName;
+    String crateName;
+    int itemLimit;
+    double totalWeight;
 
-    private int itemLimit;
+    List<String[]> items = new ArrayList<>();
+    List<ItemStack> crateContents = new ArrayList<>();
 
-    private List sourceItems;
-    private List<ItemStack> crateContents;
+    private JavaPlugin plugin;
 
-    private Random randomGenerator = new Random();
+    private PluginConfiguration config;
 
-    public Crate (String crateName, int itemLimit, List sourceItems) {
+    public Crate (String crateName, int itemLimit, double totalWeight, List<String[]> items, JavaPlugin plugin, PluginConfiguration config) {
         this.crateName = crateName;
         this.itemLimit = itemLimit;
-        this.sourceItems = sourceItems;
+        this.items = items;
+        this.plugin = plugin;
+        this.config = config;
+        this.totalWeight = totalWeight;
 
-        this.fillCrate();
+        fillCrate();
     }
 
     private void fillCrate () {
-        int randomInt;
+
+        boolean debug = config.getBoolean("debugMode");
 
         for (int i = 0; i < itemLimit; i++) {
 
             // Generate
-            randomInt = randomGenerator.nextInt(sourceItems.size());
-
-            // Grab and Split
-            String[] itemData = ((String) sourceItems.get(randomInt)).split(":");
+            int randomIndex = -1;
+            double random = Math.random() * totalWeight;
 
             try {
-                // Construct Material and Append
-                crateContents.add(new ItemStack(Material.matchMaterial(itemData[0]), Integer.parseInt(itemData[2]), Short.parseShort(itemData[1])));
-            }catch (NumberFormatException e2) {
+                // Select random item
+                for (int j = 0; j < items.size(); j++) {
+                    random -= Double.parseDouble(items.get(j)[3]);
+                    if (random <= 0.0d) {
+                        randomIndex = j;
+                        break;
+                    }
+                }
 
+                if (debug)
+                    plugin.getLogger().info("Filling crate " + crateName + " with: " + "MAT: [" + items.get(randomIndex)[0] + "] " + "DMG: [" + items.get(randomIndex)[1] + "] " + "AMT: [" + items.get(randomIndex)[2] + "]");
+
+                // Construct Material and Append
+                crateContents.add(new ItemStack(Material.matchMaterial(items.get(randomIndex)[0]), Integer.parseInt(items.get(randomIndex)[2]), Short.parseShort(items.get(randomIndex)[1])));
+
+                if (debug)
+                    plugin.getLogger().info("Fill State: [" + i + "/" + itemLimit+ "]");
+
+            }catch (NumberFormatException e2) {
+                plugin.getLogger().warning("Error while instancing " + crateName + "!\n" + e2.getMessage());
             }
         }
+    }
+
+    public List<ItemStack> getContents () {
+        return crateContents;
+    }
+
+    public String getName () {
+        return crateName;
     }
 }
