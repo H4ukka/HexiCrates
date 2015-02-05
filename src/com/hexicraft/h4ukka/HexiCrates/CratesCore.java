@@ -1,4 +1,4 @@
-package com.h4.HexiCrates;
+package com.hexicraft.h4ukka.HexiCrates;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

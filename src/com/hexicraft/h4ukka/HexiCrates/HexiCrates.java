@@ -1,4 +1,4 @@
-package com.h4.HexiCrates;
+package com.hexicraft.h4ukka.HexiCrates;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * HexiCrates v0.1 rev 0
  * by H4
- * 20082014
  */
 
 public class HexiCrates extends JavaPlugin implements Listener {
@@ -49,30 +48,13 @@ public class HexiCrates extends JavaPlugin implements Listener {
             code = ReturnCode.TOO_FEW_ARGUMENTS;
         }
 
-        if (returnCodeHasError(code, cs)) {
-            // Errors were encountered and a message was printed; Command failed.
+        if (code.isError) {
+            // Error
+            cs.sendMessage("§c" + code.errorDescription);
             return false;
         } else {
             // Success!
             return true;
-        }
-    }
-
-    private boolean returnCodeHasError(ReturnCode code, CommandSender source) {
-
-        // Check the return code and decide if we need to print out an error message
-        switch (code) {
-            case UNSUPPORTED_SOURCE:
-            case TOO_FEW_ARGUMENTS:
-            case UNKNOWN_COMMAND:
-                source.sendMessage("§c" + code.errorDescription);
-                return true;
-
-            case SUCCESS:
-                return false;
-
-            default:
-                return true;
         }
     }
 }
