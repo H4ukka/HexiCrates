@@ -12,47 +12,41 @@ public class CrateTemplate {
     int itemLimit;
     double totalWeight = 0.0d;
 
-    List<String> itemList;
-    List<CrateItem> itemChoices = new ArrayList<>();
+    List<CrateItem> items = new ArrayList<>();
 
     private JavaPlugin plugin;
 
     private PluginConfiguration config;
 
-    public CrateTemplate (String crateName, int itemLimit, List<String> sourceItems,
+    public CrateTemplate (String crateName, int itemLimit, List<CrateItem> items,
                           JavaPlugin plugin, PluginConfiguration config) {
 
         this.crateName = crateName;
         this.itemLimit = itemLimit;
-        this.itemList = sourceItems;
+        this.items = items;
         this.plugin = plugin;
         this.config = config;
 
-        if (config.getBoolean("debugMode"))
-            plugin.getLogger().info(
-                    "Instancing CrateTemplate "
-                    + crateName + " LMT: [" + itemLimit + "] ITM: "
-                    + sourceItems.toString()
-            );
+//        if (config.getBoolean("debugMode"))
+//            plugin.getLogger().info(
+//                "Instancing CrateTemplate "
+//                + crateName + " LMT: [" + itemLimit + "] ITM: "
+//                + sourceItems.toString()
+//            );
 
         parseItems ();
     }
 
     private void parseItems () {
 
-        for (String i : itemList) {
-            // Split
-            String[] item = i.split("/");
+        for (CrateItem i : items) {
 
-            // Assign
-            itemChoices.add(new CrateItem(item));
-
-            totalWeight += Double.parseDouble(item[3]);
+            totalWeight += i.getWeight();
         }
     }
 
     public Crate generateCrate () {
 
-        return new Crate (crateName, itemLimit, totalWeight, itemChoices, plugin, config);
+        return new Crate (crateName, itemLimit, totalWeight, items, plugin, config);
     }
 }

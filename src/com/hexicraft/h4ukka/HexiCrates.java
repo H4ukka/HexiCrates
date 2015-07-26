@@ -24,7 +24,9 @@ public class HexiCrates extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+
         getLogger().info("HexiCrates Closed.");
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.hexicraft.h4ukka;
 
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -35,11 +36,15 @@ public class PluginConfiguration {
         }
     }
 
-    public int getInt (String path) {
-        return config.getInt(path);
+    public int getInt (String path) { return config.getInt(path); }
+
+    public short getShort(String path) { return (short) config.getInt(path); }
+
+    public double getDouble(String path) {
+        return config.getDouble(path);
     }
 
-    public String getString (String path) {
+    public String getString(String path) {
         return config.getString(path);
     }
 
@@ -53,6 +58,15 @@ public class PluginConfiguration {
 
     public Set<String> getStringSet (String path, boolean depth) {
         return config.getConfigurationSection(path).getKeys(depth);
+    }
+
+    public void setDefault (String path, ItemStack item) {
+        config.set(path, item);
+        try {
+            config.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

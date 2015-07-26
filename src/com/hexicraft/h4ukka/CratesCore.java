@@ -28,8 +28,10 @@ public class CratesCore {
 
         for (ItemStack item : reward.getContents()) {
             p.getInventory().addItem(item);
+            //config.setDefault("test",item);
         }
-        p.sendMessage("§aYou Spawned the §e" +  reward.getName() + " §aCrate!");
+
+        p.sendMessage("§aYou Spawned the §e" + reward.getName() + " §aCrate!");
 
         return ReturnCode.SUCCESS;
     }
@@ -39,13 +41,45 @@ public class CratesCore {
 
         for (String crateDefinition : crateDefinitions) {
 
+            Set<String> itemDefinitions = config.getStringSet("Crates." + crateDefinition +".Items", false);
+            List<CrateItem> items = new ArrayList<>();
+
             if (config.getBoolean("debugMode"))
                 plugin.getLogger().info("Instancing crate: " + crateDefinition);
+
+            for (String itemDefinition : itemDefinitions) {
+
+                if (config.getBoolean("debugMode")) {
+                    plugin.getLogger().info("itemDefinition: " + itemDefinition);
+
+                    plugin.getLogger().info("Crates." + crateDefinition + ".Items." + itemDefinition + ".material");
+                    plugin.getLogger().info("Crates." + crateDefinition + ".Items." + itemDefinition + ".damage");
+                    plugin.getLogger().info("Crates." + crateDefinition + ".Items." + itemDefinition + ".amount");
+                    plugin.getLogger().info("Crates." + crateDefinition + ".Items." + itemDefinition + ".weight");
+
+                    plugin.getLogger().info(config.getString("Crates." + crateDefinition + ".Items." + itemDefinition
+                            + ".material"));
+                    plugin.getLogger().info(config.getString("Crates." + crateDefinition + ".Items." + itemDefinition
+                            + ".damage"));
+                    plugin.getLogger().info(config.getString("Crates." + crateDefinition + ".Items." + itemDefinition +
+                            ".amount"));
+                    plugin.getLogger().info(config.getString("Crates." + crateDefinition + ".Items." + itemDefinition
+                            + ".weight"));
+                }
+
+                items.add(new CrateItem(
+                    config.getString("Crates." + crateDefinition + ".Items." + itemDefinition + ".material"),
+                    config.getShort("Crates." + crateDefinition + ".Items." + itemDefinition + ".damage"),
+                    config.getInt("Crates." + crateDefinition + ".Items." + itemDefinition + ".amount"),
+                    config.getDouble("Crates." + crateDefinition + ".Items." + itemDefinition + ".weight")
+                    )
+                );
+            }
 
             crateStorage.add(new CrateTemplate(
                 crateDefinition,
                 config.getInt("Crates." + crateDefinition + ".Reward"),
-                config.getList("Crates." + crateDefinition + ".Items"),
+                items,
                 plugin,
                 config)
             );
