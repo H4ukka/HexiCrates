@@ -35,19 +35,19 @@ public class CratesCore {
     }
 
     private void populateStorage () {
-        Set<String> crates = config.getStringSet("Crates", false);
+        Set<String> crateDefinitions = config.getStringSet("Crates", false);
 
-        for (String crate : crates) {
+        for (String crateDefinition : crateDefinitions) {
 
             if (config.getBoolean("debugMode"))
-                plugin.getLogger().info("Instancing crate: " + crate);
+                plugin.getLogger().info("Instancing crate: " + crateDefinition);
 
             crateStorage.add(new CrateTemplate(
-                    crate,
-                    config.getInt("Crates." + crate + ".Reward"),
-                    config.getList("Crates." + crate + ".Items"),
-                    plugin,
-                    config)
+                crateDefinition,
+                config.getInt("Crates." + crateDefinition + ".Reward"),
+                config.getList("Crates." + crateDefinition + ".Items"),
+                plugin,
+                config)
             );
         }
     }

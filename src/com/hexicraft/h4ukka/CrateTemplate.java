@@ -12,19 +12,19 @@ public class CrateTemplate {
     int itemLimit;
     double totalWeight = 0.0d;
 
-    List sourceItems;
-    List<String[]> parsedItems = new ArrayList<>();
+    List<String> itemList;
+    List<CrateItem> itemChoices = new ArrayList<>();
 
     private JavaPlugin plugin;
 
     private PluginConfiguration config;
 
-    public CrateTemplate (String crateName, int itemLimit, List sourceItems,
+    public CrateTemplate (String crateName, int itemLimit, List<String> sourceItems,
                           JavaPlugin plugin, PluginConfiguration config) {
 
         this.crateName = crateName;
         this.itemLimit = itemLimit;
-        this.sourceItems = sourceItems;
+        this.itemList = sourceItems;
         this.plugin = plugin;
         this.config = config;
 
@@ -40,12 +40,12 @@ public class CrateTemplate {
 
     private void parseItems () {
 
-        for (int i = 0; i < sourceItems.size(); i++) {
+        for (String i : itemList) {
             // Split
-            String[] item = ((String) sourceItems.get(i)).split("/");
+            String[] item = i.split("/");
 
             // Assign
-            parsedItems.add(item);
+            itemChoices.add(new CrateItem(item));
 
             totalWeight += Double.parseDouble(item[3]);
         }
@@ -53,6 +53,6 @@ public class CrateTemplate {
 
     public Crate generateCrate () {
 
-        return new Crate (crateName, itemLimit, totalWeight, parsedItems, plugin, config);
+        return new Crate (crateName, itemLimit, totalWeight, itemChoices, plugin, config);
     }
 }

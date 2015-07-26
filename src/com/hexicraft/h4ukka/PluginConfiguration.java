@@ -47,8 +47,8 @@ public class PluginConfiguration {
         return config.getBoolean(path);
     }
 
-    public List getList (String path) {
-        return config.getList(path);
+    public List<String> getList (String path) {
+        return config.getStringList(path);
     }
 
     public Set<String> getStringSet (String path, boolean depth) {
