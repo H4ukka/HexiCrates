@@ -1,4 +1,4 @@
-package com.hexicraft.h4ukka.HexiCrates;
+package com.hexicraft.h4ukka;
 
 /**
  * [name] [description] [isError]

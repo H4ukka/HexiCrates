@@ -1,4 +1,4 @@
-package com.hexicraft.h4ukka.HexiCrates;
+package com.hexicraft.h4ukka;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,7 +19,9 @@ public class CrateTemplate {
 
     private PluginConfiguration config;
 
-    public CrateTemplate (String crateName, int itemLimit, List sourceItems, JavaPlugin plugin, PluginConfiguration config) {
+    public CrateTemplate (String crateName, int itemLimit, List sourceItems,
+                          JavaPlugin plugin, PluginConfiguration config) {
+
         this.crateName = crateName;
         this.itemLimit = itemLimit;
         this.sourceItems = sourceItems;
@@ -27,7 +29,11 @@ public class CrateTemplate {
         this.config = config;
 
         if (config.getBoolean("debugMode"))
-            plugin.getLogger().info("Instancing CrateTemplate " + crateName + " LMT: [" + itemLimit + "] ITM: " + sourceItems.toString());
+            plugin.getLogger().info(
+                    "Instancing CrateTemplate "
+                    + crateName + " LMT: [" + itemLimit + "] ITM: "
+                    + sourceItems.toString()
+            );
 
         parseItems ();
     }
@@ -36,7 +42,7 @@ public class CrateTemplate {
 
         for (int i = 0; i < sourceItems.size(); i++) {
             // Split
-            String[] item = ((String) sourceItems.get(i)).split(":");
+            String[] item = ((String) sourceItems.get(i)).split("/");
 
             // Assign
             parsedItems.add(item);
@@ -46,6 +52,7 @@ public class CrateTemplate {
     }
 
     public Crate generateCrate () {
+
         return new Crate (crateName, itemLimit, totalWeight, parsedItems, plugin, config);
     }
 }

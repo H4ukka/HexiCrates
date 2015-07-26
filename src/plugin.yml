@@ -1,5 +1,5 @@
 name: HexiCrates
-main: com.hexicraft.h4.HexiCrates.HexiCrates
+main: com.hexicraft.h4ukka.HexiCrates
 version: 0.1r0
 commands:
    roll:

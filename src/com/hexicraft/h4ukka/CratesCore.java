@@ -1,4 +1,4 @@
-package com.hexicraft.h4ukka.HexiCrates;
+package com.hexicraft.h4ukka;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -42,7 +42,13 @@ public class CratesCore {
             if (config.getBoolean("debugMode"))
                 plugin.getLogger().info("Instancing crate: " + crate);
 
-            crateStorage.add(new CrateTemplate(crate, config.getInt("Crates." + crate + ".Reward"), config.getList("Crates." + crate + ".Items"), plugin, config));
+            crateStorage.add(new CrateTemplate(
+                    crate,
+                    config.getInt("Crates." + crate + ".Reward"),
+                    config.getList("Crates." + crate + ".Items"),
+                    plugin,
+                    config)
+            );
         }
     }
 }
